@@ -1,0 +1,32 @@
+CONNECTING TO DATABASE USING SQL SERVER NATIVE CLIENT
+
+Driver={SQL Server Native Client 11.0};
+Server=myServerAddress;
+Database=myDatabase;
+Username=myUsername;
+Password=myPassword;
+
+
+        
+package pack1;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import javax.swing.JOptionPane;
+
+public class connecting {
+    Connection conn = null;
+    public static Connection ConnectDb(){
+        try{
+            String myDriver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+            String myUrl =  "jdbc:sqlserver:YVONNE/SQLEXPRESS;vanita";
+            Connection conn = DriverManager.getConnection("vitch","sa","sap");
+            return conn;
+        }
+        catch (Exception e){
+            JOptionPane.showMessageDialog(null, e);
+            return null;
+        }
+    }
+    
+}

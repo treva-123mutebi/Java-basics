@@ -1,0 +1,7 @@
+JFILE CHOOSER
+
+ JFileChooser chooser = new JFileChooser();
+        chooser.showOpenDialog(null);
+        File f = chooser.getSelectedFile();
+        String filename = f.getAbsolutePath();
+        choosephoto.setText(filename);

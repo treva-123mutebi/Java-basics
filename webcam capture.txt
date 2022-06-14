@@ -1,0 +1,121 @@
+WEBCAM CAPTURE
+
+package seal;
+
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
+import com.github.sarxos.webcam.WebcamResolution;
+import java.awt.FlowLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+public class capture extends javax.swing.JFrame {
+    
+    Webcam webcam;
+    
+    public capture() {
+        initComponents();
+      
+        webcam = Webcam.getDefault();
+        setLayout(new FlowLayout());
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                webcam.close();
+                dispose();
+                System.exit(0);
+            }
+        });
+        webcam.open();;
+        add(new WebcamPanel(webcam));
+        setTitle("Capture");
+        pack();
+        setVisible(true);
+    }
+
+    @SuppressWarnings("unchecked")
+    
+    private void captureActionPerformed(java.awt.event.ActionEvent evt) {                                        
+        webcam.close();
+        File file = new File("test.jpg");
+        webcam = Webcam.getDefault();
+        webcam.setViewSize(WebcamResolution.QVGA.getSize());
+        webcam.open();
+        BufferedImage image = webcam.getImage();
+        
+        try {
+            ImageIO.write(image, "JPG", file);
+        } 
+        catch (IOException ex) {
+            Logger.getLogger(capture.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try{
+            File image2 = new File(file.getAbsolutePath());
+            FileInputStream fis = new FileInputStream(image2);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] buff = new byte[1024];
+
+            for(int readNum;(readNum =fis.read(buff))!= -1;){
+                bos.write(buff,0,readNum);
+            }
+            person_image = bos.toByteArray();
+            format = new ImageIcon(person_image);
+            
+            signup_form.photo = person_image;
+            signup_form.userimage.setIcon(format);
+       
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        webcam.close();
+        dispose();                    
+    }                                       
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Windows".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(home_page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(home_page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(home_page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(home_page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new capture().setVisible(true);
+            }
+        });
+    }
+    // Variables declaration - do not modify                     
+    private javax.swing.JButton capture;
+    // End of variables declaration                   
+byte[]person_image=null;
+ImageIcon format = null;
+}

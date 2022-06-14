@@ -1,0 +1,49 @@
+FETCHING DATA FROM THE DATABASE (LOGIN)
+
+package pack1;
+
+import java.sql.*;
+import javax.swing.*;
+
+public class Login_form extends javax.swing.JFrame {
+    Connection conn = null;
+    ResultSet rs = null;
+    PreparedStatement pst = null;
+
+
+    public Login_form() {
+        initComponents();
+        conn = javaconnect.ConnectDb();
+    }
+
+    @SuppressWarnings("unchecked")
+
+        private void submitActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        String sql = "select * from LOGINTABLE where USERNAME=? and PASSWORD=?";
+                try{
+                    pst = conn.prepareStatement(sql);
+                    pst.setString(1,username.getText());
+                    pst.setString(2,password.getText());
+                    rs = pst.executeQuery();
+                    if(rs.next()){
+                        JOptionPane.showMessageDialog(null, "Username and Password is correct");
+                        rs.close();
+                        pst.close();
+                        Employee_form e = new Employee_form();
+                        e.setVisible(true);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Username or Password is not correct");
+                    }
+                }
+                catch (Exception e){
+                    JOptionPane.showMessageDialog(null, e);
+                }
+                finally{
+                    try{
+                        rs.close();
+                        pst.close();
+                    }
+                    catch (Exception e){}
+                }
+    }                                      

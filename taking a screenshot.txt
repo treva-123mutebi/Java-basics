@@ -1,0 +1,19 @@
+TAKING A SCREENSHOT
+
+public static BufferedImage getScreenShot(Component component){
+        BufferedImage image = new BufferedImage(component.getWidth(),component.getHeight(),BufferedImage.TYPE_INT_RGB);
+        component.paint(image.getGraphics());
+        
+        return image;
+    }
+    public static void SaveScreenShot(Component component, String filename)throws Exception{
+        BufferedImage img = getScreenShot(component);
+        ImageIO.write(img,"png",new File(filename));
+        
+    }
+private void takephotoActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        try{
+            SaveScreenShot(signup_panel,"User Image.png");
+        }
+        catch (Exception e){}
+    }                          

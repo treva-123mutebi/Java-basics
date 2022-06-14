@@ -1,0 +1,10 @@
+JDATE CHOOSER
+
+try{
+String sql = "INSERT into()values();"
+pst = conn.prepareStatement(sql);
+SimpleDateFormat sdf = new SimpleDateFormat("d MMM,yyyy", Locale.getDefault());
+String value = sdf.format(checkin.getDate());
+pst.setString(3,value);
+}
+            

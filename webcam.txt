@@ -1,0 +1,35 @@
+WEBCAM
+
+try {            
+            File file = new File("test.jpg");
+            Webcam webcam = Webcam.getDefault();
+            webcam.setViewSize(new Dimension(176,144));
+            webcam.open();
+            BufferedImage image = webcam.getImage();
+            imagePath.setText(image.toString());
+
+            ImageIO.write(image, "JPG", file);
+            filename = file.getAbsolutePath();
+            imagePath.setText(filename);
+            
+            try{
+                File image2 = new File(filename);
+                FileInputStream fis = new FileInputStream(image2);
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                byte[] buff = new byte[1024];
+
+                for(int readNum;(readNum =fis.read(buff))!= -1;){
+                    bos.write(buff,0,readNum);
+                }
+                
+                person_image = bos.toByteArray();
+                format = new ImageIcon(person_image);
+                testing.setIcon(format);                     
+            }
+            catch(Exception e){
+                JOptionPane.showMessageDialog(null, e);
+            }
+            webcam.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Teacher_Form.class.getName()).log(Level.SEVERE, null, ex);
+        }

@@ -1,0 +1,17 @@
+CONVERTING IMAGES TO ICONS
+
+public class icons extends javax.swing.JFrame {
+    Connection conn = null;
+    ResultSet rst = null;
+    PreparedStatement pst = null;
+
+public static void convert(String[] args) throws IOException {
+        
+        BufferedImage bi = ImageIO.read(new File("forward.png"));
+        ICOEncoder.write(bi, new File("forward.ico"));
+    }
+    public static void convert2(String[] args) throws IOException {
+        
+        BufferedImage bi = ImageIO.read(new File("back.png"));
+        ICOEncoder.write(bi, new File("back.ico"));
+    }

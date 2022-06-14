@@ -1,0 +1,86 @@
+INSERTING,UPDATING,DELETNG
+
+package pack1;
+
+import java.sql.*;
+import javax.swing.*;
+import net.proteanit.sql.DbUtils;
+
+public class Employee_form extends javax.swing.JFrame {
+    Connection conn = null;
+    ResultSet rst = null;
+    PreparedStatement pst = null;
+
+    public Employee_form() {
+        initComponents();
+        conn = javaconnect.ConnectDb();
+        Update_Table();
+    }
+    private void Update_Table(){
+        try{
+            String sql = "select * from EMPLOYEES";
+            pst = conn.prepareStatement(sql);
+            rst = pst.executeQuery();
+            Table_Employee.setModel(DbUtils.resultSetToTableModel(rst));
+        }
+        catch (Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        finally{
+            try{
+                rst.close();
+                pst.close();
+            }
+            catch (Exception e){}
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+
+       private void saveActionPerformed(java.awt.event.ActionEvent evt) {                                     
+        try{
+            String sql = "Insert into EMPLOYEES (EMPLOYEEID,FIRSTNAME,LASTNAME) values(?,?,?)";
+            pst = conn.prepareStatement(sql);
+            pst.setString(1,employeeid.getText());
+            pst.setString(2,firstname.getText());
+            pst.setString(3,lastname.getText());
+            
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Saved!");
+        }
+        catch (Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        Update_Table();
+    }                                    
+
+    private void updateActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        try{
+            String value1 = employeeid.getText();
+            String value2 = firstname.getText();
+            String value3 = lastname.getText();
+            String sql = "update EMPLOYEES set EMPLOYEEID = '"+value1+"', FIRSTNAME='"+value2+"', LASTNAME='"+value3+"' where EMPLOYEEID='"+value1+"' ";
+            pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Updated!");
+        }
+        catch (Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        Update_Table();
+    }                                      
+
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        try{
+            String sql = "Delete from EMPLOYEES where EMPLOYEEID=?";
+            pst = conn.prepareStatement(sql);
+            pst.setString(1,employeeid.getText());
+            
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Deleted!");
+        }
+        catch (Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        Update_Table();
+    }                                      

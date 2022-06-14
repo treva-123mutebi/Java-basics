@@ -1,0 +1,42 @@
+QR CODE READER
+
+import com.google.zxing.*;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.common.HybridBinarizer;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+public class QRCodeReader{
+
+private static String decodeQRCode(File qrCodeimage) throws IOException{
+        BufferedImage BI = ImageIO.read(qrCodeimage);
+        LuminanceSource LS = new BufferedImageLuminanceSource(BI);
+        BinaryBitmap BB = new BinaryBitmap(new HybridBinarizer(LS));
+        
+        try{
+            Result r = new MultiFormatReader().decode(BB);
+            return r.getText();
+        }
+        catch(NotFoundException e){
+            System.out.println("There is no QR Code in the image");
+            return null;
+        }
+
+public static void main(String[] args){
+        try{
+        File f = new File("C:/Users/Yvonne Vanita/Desktop/SCHOOL/Semester 2/Java Projects/JAR files/QR.png");
+            String decodedText = decodeQRCode(f);
+            if(decodedText == null){
+                System.out.println("No QR Code found in the image");
+            }
+            else{a
+                System.out.println("Decoded text = " +decodedText);
+            }
+        }
+            catch(IOException e){
+                System.out.println("Could not decode QR Code, IOException :: "+ e.getMessage());
+            }
+    }
+}

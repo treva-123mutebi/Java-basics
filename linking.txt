@@ -1,0 +1,7 @@
+LINKING PAGES
+
+new Administrator.AdministratorPage().setVisible(true);
+        this.dispose();
+
+new AdministratorPage().setVisible(true);
+        this.dispose();

@@ -1,0 +1,26 @@
+RUNNING A JFRAME IN FULL SCREEN MODE
+
+package seal;
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.awt.Toolkit;
+
+
+public class home_page{
+home_page home;
+public homepage(){
+home = new home_page("home_page");
+home_page home;
+        home = new home_page();
+        Toolkit tk = Toolkit.getDefaultToolkit();
+        int xSize = ((int) tk.getScreenSize().getWidth());
+        int ySize = ((int) tk.getScreenSize().getHeight());
+        home.setSize(xSize,ySize);
+        home.show();
+    }
+    public static void testscreen(String[] args){
+        home_page hp = new home_page();
+    }
+}
